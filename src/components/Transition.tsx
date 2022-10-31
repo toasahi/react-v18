@@ -1,4 +1,4 @@
-import {Fragment, useState} from "react";
+import {useState, startTransition} from "react";
 import {Avatar} from "./Avatar";
 
 type Task = {
@@ -32,12 +32,14 @@ const filteringAssignee = (assignee: string) => {
 }
 
 export const Transition = () => {
-    const [selectedAssignee,setSelectedAssignee] = useState<string>('');
-    const [taskList,setTaskList] = useState<Task[]>(tasks)
+    const [selectedAssignee, setSelectedAssignee] = useState<string>('');
+    const [taskList, setTaskList] = useState<Task[]>(tasks)
 
     const onClickAssignee = (assignee: string) => {
         setSelectedAssignee(assignee)
-        setTaskList(filteringAssignee(assignee))
+        startTransition(() => {
+            setTaskList(filteringAssignee(assignee))
+        })
     }
     return (
         <div>
@@ -48,7 +50,7 @@ export const Transition = () => {
                 <Avatar isSelected={selectedAssignee === member.c} onClick={onClickAssignee}>{member.c}</Avatar>
             </div>
             <br/>
-            <button onClick={()=>onClickAssignee('')}>リセット</button>
+            <button onClick={() => onClickAssignee('')}>リセット</button>
             {taskList.map((task) => (
                 <div key={task.id} style={{width: '300px', margin: 'auto', background: 'white', color: '#333'}}>
                     <p>タイトル : {task.title}</p>
