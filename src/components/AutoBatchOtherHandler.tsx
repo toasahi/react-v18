@@ -1,4 +1,5 @@
 import {Fragment, useState} from "react";
+import {flushSync} from "react-dom";
 
 type Todo = {
     userId: number;
@@ -18,7 +19,9 @@ export const AutoBatchOtherHandler = () => {
         fetch('https://jsonplaceholder.typicode.com/todos')
             .then((res) => res.json())
             .then((data) => {
-                setTodos(data);
+                flushSync(()=>{
+                    setTodos(data);
+                })
                 setIsFinishApi(true);
                 setState3((state3) => state3 + 1);
             })
