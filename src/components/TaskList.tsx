@@ -6,10 +6,10 @@ type Props = {
 }
 
 export const TaskList = ({taskList}: Props) => {
-    const defferedTaskList = useDeferredValue(taskList);
+    const deferredTaskList = useDeferredValue(taskList);
     return (
         <>
-            {defferedTaskList.map((task) => (
+            {deferredTaskList.map((task) => (
                 <div key={task.id} style={{
                     width: '300px',
                     margin: 'auto',
